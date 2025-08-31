@@ -7,7 +7,7 @@ describe('Fretboard', () => {
     describe('constructor', () => {
         it('should create frets representation during initialization', () => {
             const fretboard = new Fretboard(
-                ['E', 'A'],
+                ['A', 'E'],
                 2
             )
 
@@ -33,7 +33,7 @@ describe('Fretboard', () => {
     describe('getModeOnFretboard', () => {
         it('should return the correct notes for the A aeolian mode', () => {
             const fretboard = new Fretboard(
-                ['E', 'A'],
+                ['A', 'E'],
                 2
             )
 

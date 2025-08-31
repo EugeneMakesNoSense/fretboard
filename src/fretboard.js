@@ -19,7 +19,7 @@ export class Fretboard {
 
         this.#validateStrings(strings)
 
-        const preparedStrings = strings.reverse().map(string => noteToNumberMap[string])
+        const preparedStrings = strings.map(string => noteToNumberMap[string])
 
         this.#stringsMatrix = this.#createStringsMatrix(preparedStrings, frets)
     }

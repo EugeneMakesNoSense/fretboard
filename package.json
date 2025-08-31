@@ -1,0 +1,16 @@
+{
+  "name": "fretboard",
+  "version": "0.1.0",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "node --test"
+  },
+  "type": "module",
+  "keywords": [],
+  "author": "Liauchenia Yauheni",
+  "license": "ISC",
+  "description": "",
+  "devDependencies": {
+    "typescript": "^5.9.2"
+  }
+}

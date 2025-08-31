@@ -72,6 +72,23 @@ export class Fretboard {
     }
 
     /**
+     * Get the position of a note in a scale
+     * @param {number} currentNoteNumber - The note number to find the position for
+     * @param {number} rootNoteNumber - The root note number of the scale
+     * @param {number[]} modeIntervals - The intervals of the mode
+     * @returns {number} - The position of the note in the scale
+     */
+    #getPositionInScale(currentNoteNumber, rootNoteNumber, modeIntervals) {
+        if (currentNoteNumber === rootNoteNumber) {
+            return 1
+        }
+
+        const positionInScale = modeIntervals.findIndex(interval => (rootNoteNumber + interval) % 12 === currentNoteNumber)
+
+        return positionInScale !== -1 ? positionInScale + 1 : -1
+    }
+
+    /**
      * Get the notes for a specific mode on the fretboard
      * @param {string} rootNote - The root note of the mode
      * @param {string} mode - The mode to get the notes for
@@ -96,8 +113,11 @@ export class Fretboard {
                     note.root = true
                 }
 
-                if (modeIntervals.includes((note.noteNumber - rootNoteNumber + 12) % 12)) {
+                const positionInScale = this.#getPositionInScale(note.noteNumber, rootNoteNumber, modeIntervals)
+
+                if (positionInScale !== -1) {
                     note.highlighted = true
+                    note.position = positionInScale
                 }
 
                 return note

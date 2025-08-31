@@ -39,12 +39,12 @@ describe('Fretboard', () => {
 
             const expectedAMinorStringMatrix = [
                 [
-                    { noteNumber: 1, majorNote: 'A', minorNote: 'A', highlighted: true, root: true },
+                    { noteNumber: 1, majorNote: 'A', minorNote: 'A', highlighted: true, root: true, position: 1 },
                     { noteNumber: 2, majorNote: 'A#', minorNote: 'B♭', highlighted: false, root: false },
                 ],
                 [
-                    { noteNumber: 8, majorNote: 'E', minorNote: 'E', highlighted: true, root: false },
-                    { noteNumber: 9, majorNote: 'F', minorNote: 'F', highlighted: true, root: false },
+                    { noteNumber: 8, majorNote: 'E', minorNote: 'E', highlighted: true, root: false, position: 5 },
+                    { noteNumber: 9, majorNote: 'F', minorNote: 'F', highlighted: true, root: false, position: 6 },
                 ]
             ]
 

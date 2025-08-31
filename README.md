@@ -104,3 +104,6 @@ fretboard.getFretboard[0][0].positionInScale // -1 if not in scale
   ...
 ]
 ```
+
+# Development notes
+Project uses Typescript and JSDoc for type safety without compilation ([docs](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html))

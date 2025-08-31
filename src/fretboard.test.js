@@ -22,7 +22,7 @@ describe('Fretboard', () => {
                 ]
             ]
 
-            assert.deepStrictEqual(fretboard.stringsMatrix, expectedStringMatrix)
+            assert.deepStrictEqual(fretboard.getFretboard, expectedStringMatrix)
         })
 
         it.todo('should throw if no strings are provided')

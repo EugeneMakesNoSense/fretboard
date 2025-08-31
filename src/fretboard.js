@@ -1,6 +1,10 @@
 import { noteOnFretFactory } from './note.js'
 import { noteToNumberMap, modesIntervalsMap, supportedNotes, supportedModes } from './constants.js'
 
+/**
+ * Represents a guitar fretboard.
+ * @implements {FretboardInterface}
+ */
 export class Fretboard {
     #stringsMatrix
 
@@ -115,7 +119,7 @@ export class Fretboard {
         })
     }
 
-    get stringsMatrix() {
+    get getFretboard() {
         return this.#stringsMatrix
     }
 }

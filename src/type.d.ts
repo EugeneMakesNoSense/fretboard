@@ -7,3 +7,8 @@ declare type Note = {
 declare type NoteInScale = Note & {
     positionInScale: number
 }
+
+declare interface FretboardInterface {
+    getFretboard: Note[][],
+    getModeOnFretboard(rootNote: string, mode: string): NoteInScale[][]
+}

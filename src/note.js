@@ -1,4 +1,4 @@
-import { numberToMajorNoteMap, numberToMinorNoteMap } from './constants.js'
+import { numberToSharpNoteMap, numberToFlatNoteMap } from './constants.js'
 
 /**
  * Factory function to create a note object on a fret
@@ -7,8 +7,6 @@ import { numberToMajorNoteMap, numberToMinorNoteMap } from './constants.js'
  */
 export const noteOnFretFactory = (noteNumber) => ({
     noteNumber,
-    majorNote: numberToMajorNoteMap[noteNumber],
-    minorNote: numberToMinorNoteMap[noteNumber],
-    root: false,
-    highlighted: false,
+    sharpNote: numberToSharpNoteMap[noteNumber],
+    flatNote: numberToFlatNoteMap[noteNumber],
 })

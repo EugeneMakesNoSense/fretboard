@@ -1,8 +1,9 @@
 declare type Note = {
     noteNumber: number,
-    majorNote: string,
-    minorNote: string,
-    root: boolean,
-    highlighted: boolean,
-    position?: number
+    sharpNote: string,
+    flatNote: string,
+}
+
+declare type NoteInScale = Note & {
+    positionInScale: number
 }

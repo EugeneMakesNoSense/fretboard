@@ -28,7 +28,7 @@ export const supportedNotes = Object.keys(noteToNumberMap)
  * Map of note numbers to their corresponding major note names
  * @type {Record<number, string>}
  */
-export const numberToMajorNoteMap = {
+export const numberToSharpNoteMap = {
     1: 'A',
     2: 'A#',
     3: 'B',
@@ -47,7 +47,7 @@ export const numberToMajorNoteMap = {
  * Map of note numbers to their corresponding major note names
  * @type {Record<number, string>}
  */
-export const numberToMinorNoteMap = {
+export const numberToFlatNoteMap = {
     1: 'A',
     2: 'B♭',
     3: 'B',

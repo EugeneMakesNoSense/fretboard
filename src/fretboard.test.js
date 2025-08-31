@@ -13,12 +13,12 @@ describe('Fretboard', () => {
 
             const expectedStringMatrix = [
                 [
-                    { noteNumber: 1, majorNote: 'A', minorNote: 'A', highlighted: false, root: false },
-                    { noteNumber: 2, majorNote: 'A#', minorNote: 'B♭', highlighted: false, root: false },
+                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A' },
+                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭' },
                 ],
                 [
-                    { noteNumber: 8, majorNote: 'E', minorNote: 'E', highlighted: false, root: false },
-                    { noteNumber: 9, majorNote: 'F', minorNote: 'F', highlighted: false, root: false },
+                    { noteNumber: 8, sharpNote: 'E', flatNote: 'E' },
+                    { noteNumber: 9, sharpNote: 'F', flatNote: 'F' },
                 ]
             ]
 
@@ -39,12 +39,12 @@ describe('Fretboard', () => {
 
             const expectedAMinorStringMatrix = [
                 [
-                    { noteNumber: 1, majorNote: 'A', minorNote: 'A', highlighted: true, root: true, position: 1 },
-                    { noteNumber: 2, majorNote: 'A#', minorNote: 'B♭', highlighted: false, root: false },
+                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A', positionInScale: 1 },
+                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭', positionInScale: -1 },
                 ],
                 [
-                    { noteNumber: 8, majorNote: 'E', minorNote: 'E', highlighted: true, root: false, position: 5 },
-                    { noteNumber: 9, majorNote: 'F', minorNote: 'F', highlighted: true, root: false, position: 6 },
+                    { noteNumber: 8, sharpNote: 'E', flatNote: 'E', positionInScale: 5 },
+                    { noteNumber: 9, sharpNote: 'F', flatNote: 'F', positionInScale: 6 },
                 ]
             ]
 

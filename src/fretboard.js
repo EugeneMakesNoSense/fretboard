@@ -92,7 +92,7 @@ export class Fretboard {
      * Get the notes for a specific mode on the fretboard
      * @param {string} rootNote - The root note of the mode
      * @param {string} mode - The mode to get the notes for
-     * @returns {Note[][]} - The notes for the mode on the fretboard
+     * @returns {NoteInScale[][]} - The notes for the mode on the fretboard
      */
     getModeOnFretboard(rootNote, mode) {
         const rootNoteNumber = noteToNumberMap[rootNote]
@@ -108,20 +108,10 @@ export class Fretboard {
         }
 
         return this.#stringsMatrix.map(string => {
-            return string.map((note) => {
-                if (note.noteNumber === rootNoteNumber) {
-                    note.root = true
-                }
-
-                const positionInScale = this.#getPositionInScale(note.noteNumber, rootNoteNumber, modeIntervals)
-
-                if (positionInScale !== -1) {
-                    note.highlighted = true
-                    note.position = positionInScale
-                }
-
-                return note
-            })
+            return string.map((note) => ({
+                ...note,
+                positionInScale: this.#getPositionInScale(note.noteNumber, rootNoteNumber, modeIntervals)
+            }))
         })
     }
 

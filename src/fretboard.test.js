@@ -25,9 +25,21 @@ describe('Fretboard', () => {
             assert.deepStrictEqual(fretboard.getFretboard, expectedStringMatrix)
         })
 
-        it.todo('should throw if no strings are provided')
-        it.todo('should throw if invalid string name is provided')
-        it.todo('should throw if invalid number of frets is provided')
+        it('should throw if no strings are provided', () => {
+            assert.throws(() => new Fretboard([], 2), {
+                message: 'No strings provided'
+            })
+        })
+        it('should throw if invalid string name is provided', () => {
+            assert.throws(() => new Fretboard(['InvalidNote'], 2), {
+                message: 'Invalid string note: InvalidNote. Supported notes: A, A#, B(f), B, C, C#, D(f), D, D#, E(f), E, F, F#, G(f), G, G#, A(f)'
+            })
+        })
+        it('should throw if invalid number of frets is provided', () => {
+            assert.throws(() => new Fretboard(['A', 'E'], 0), {
+                message: 'Invalid number of frets'
+            })
+        })
     })
 
     describe('getModeOnFretboard', () => {
@@ -51,7 +63,26 @@ describe('Fretboard', () => {
             assert.deepStrictEqual(fretboard.getModeOnFretboard('A', 'aeolian'), expectedAMinorStringMatrix)
         })
 
-        it.todo('should throw if invalid root note is provided')
-        it.todo('should throw if invalid mode is provided')
+        it('should throw if invalid root note is provided', () => {
+            const fretboard = new Fretboard(
+                ['A', 'E'],
+                2
+            )
+
+            assert.throws(() => fretboard.getModeOnFretboard('InvalidNote', 'aeolian'), {
+                message: 'Invalid root note. Supported notes: A, A#, B(f), B, C, C#, D(f), D, D#, E(f), E, F, F#, G(f), G, G#, A(f)'
+            })
+        })
+
+        it('should throw if invalid mode is provided', () => {
+            const fretboard = new Fretboard(
+                ['A', 'E'],
+                2
+            )
+
+            assert.throws(() => fretboard.getModeOnFretboard('A', 'InvalidMode'), {
+                message: 'Invalid mode. Supported modes: ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian'
+            })
+        })
     })
 })

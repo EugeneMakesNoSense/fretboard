@@ -5,21 +5,21 @@
 export const noteToNumberMap = {
     'A': 1,
     'A#': 2,
-    'b(f)': 2,
+    'B(f)': 2,
     'B': 3,
     'C': 4,
     'C#': 5,
-    'd(f)': 5,
+    'D(f)': 5,
     'D': 6,
     'D#': 7,
-    'e(f)': 7,
+    'E(f)': 7,
     'E': 8,
     'F': 9,
     'F#': 10,
-    'g(f)': 10,
+    'G(f)': 10,
     'G': 11,
     'G#': 12,
-    'a(f)': 12
+    'A(f)': 12
 }
 
 export const supportedNotes = Object.keys(noteToNumberMap)

@@ -27,14 +27,14 @@ describe('Fretboard', () => {
 
         it('should create frets representation with octaves during initialization', () => {
             const fretboard = new Fretboard(
-                [{ note: 'A', octave: 2 }, { note: 'E', octave: 2 }],
+                [{ note: 'A', octave: 0 }, { note: 'E', octave: 2 }],
                 2
             )
 
             const expectedStringMatrix = [
                 [
-                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A', octave: 2 },
-                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭', octave: 2 },
+                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A', octave: 0 },
+                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭', octave: 0 },
                 ],
                 [
                     { noteNumber: 8, sharpNote: 'E', flatNote: 'E', octave: 2 },

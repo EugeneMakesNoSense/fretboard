@@ -1,5 +1,5 @@
 import { noteOnFretFactory } from './note.js'
-import { noteToNumberMap, modesIntervalsMap, supportedNotes, supportedModes } from './constants.js'
+import { noteToNumberMap, modesIntervalsMap, supportedNotes, supportedModes, chromaticScaleNotesNumber } from './constants.js'
 
 /**
  * Represents a guitar fretboard.
@@ -9,7 +9,7 @@ export class Fretboard {
     #stringsMatrix
 
     /**
-     * @param {string[]} strings - open note on each string
+     * @param {OpenNote[]} strings - open note on each string
      * @param {number} frets - number of frets on the fretboard
      */
     constructor(strings, frets) {
@@ -23,19 +23,17 @@ export class Fretboard {
 
         this.#validateStrings(strings)
 
-        const preparedStrings = strings.map(string => noteToNumberMap[string])
-
-        this.#stringsMatrix = this.#createStringsMatrix(preparedStrings, frets)
+        this.#stringsMatrix = this.#createStringsMatrix(strings, frets)
     }
 
     /**
      * Validate the provided string notes
-     * @param {string[]} strings - The string notes to validate
+     * @param {OpenNote[]} strings - The string notes to validate
      */
     #validateStrings(strings) {
         for (const string of strings) {
-            if (!supportedNotes.includes(string)) {
-                throw new Error(`Invalid string note: ${string}. Supported notes: ${supportedNotes.join(', ')}`)
+            if (!supportedNotes.includes(string.note)) {
+                throw new Error(`Invalid string note: ${string.note}. Supported notes: ${supportedNotes.join(', ')}`)
             }
         }
     }
@@ -47,7 +45,7 @@ export class Fretboard {
      * @returns {number} - The note number on the fret
      */
     #getNoteNumber(openNoteNumber, fret) {
-        if (openNoteNumber < 1 || openNoteNumber > 12) {
+        if (openNoteNumber < 1 || openNoteNumber > chromaticScaleNotesNumber) {
             throw new Error('Invalid open note number')
         }
 
@@ -55,20 +53,22 @@ export class Fretboard {
             throw new Error('Invalid fret number')
         }
 
-        return (openNoteNumber + fret) % 12 || 12
+        return (openNoteNumber + fret) % chromaticScaleNotesNumber || chromaticScaleNotesNumber
     }
 
     /**
-     * @param {number[]} strings - open note on each string
+     * @param {OpenNote[]} strings - open note on each string
      * @param {number} frets - number of frets on the fretboard
      * @returns {Note[][]} - matrix of notes for each string and fret
      */
     #createStringsMatrix(strings, frets) {
-        return strings.map((stringOpenNote) => {
-            const stringNotes = [noteOnFretFactory(stringOpenNote)]
+        return strings.map((string) => {
+            const stringNumber = noteToNumberMap[string.note]
+
+            const stringNotes = [noteOnFretFactory(stringNumber, string.octave)]
 
             for (let fret = 1; fret < frets; fret++) {
-                stringNotes.push(noteOnFretFactory(this.#getNoteNumber(stringOpenNote, fret)))
+                stringNotes.push(noteOnFretFactory(this.#getNoteNumber(stringNumber, fret), string.octave))
             }
 
             return stringNotes
@@ -87,7 +87,7 @@ export class Fretboard {
             return 1
         }
 
-        const positionInScale = modeIntervals.findIndex(interval => (rootNoteNumber + interval) % 12 === currentNoteNumber)
+        const positionInScale = modeIntervals.findIndex(interval => (rootNoteNumber + interval) % chromaticScaleNotesNumber === currentNoteNumber)
 
         return positionInScale !== -1 ? positionInScale + 1 : -1
     }

@@ -13,16 +13,16 @@ describe('Fretboard', () => {
 
             const expectedStringMatrix = [
                 [
-                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A', octave: null },
-                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭', octave: null },
+                    { number: 1, sharp: 'A', flat: 'A', octave: null, scalePosition: null },
+                    { number: 2, sharp: 'A#', flat: 'B♭', octave: null, scalePosition: null },
                 ],
                 [
-                    { noteNumber: 7, sharpNote: 'D#', flatNote: 'E♭', octave: null },
-                    { noteNumber: 8, sharpNote: 'E', flatNote: 'E', octave: null },
+                    { number: 7, sharp: 'D#', flat: 'E♭', octave: null, scalePosition: null },
+                    { number: 8, sharp: 'E', flat: 'E', octave: null, scalePosition: null },
                 ]
             ]
 
-            assert.deepStrictEqual(fretboard.getFretboard, expectedStringMatrix)
+            assert.deepStrictEqual(fretboard.fretboard, expectedStringMatrix)
         })
 
         it('should create frets representation with octaves during initialization', () => {
@@ -33,18 +33,18 @@ describe('Fretboard', () => {
 
             const expectedStringMatrix = [
                 [
-                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A', octave: 0 },
-                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭', octave: 0 },
-                    { noteNumber: 3, sharpNote: 'B', flatNote: 'B', octave: 0 },
+                    { number: 1, sharp: 'A', flat: 'A', octave: 0, scalePosition: null },
+                    { number: 2, sharp: 'A#', flat: 'B♭', octave: 0, scalePosition: null },
+                    { number: 3, sharp: 'B', flat: 'B', octave: 0, scalePosition: null },
                 ],
                 [
-                    { noteNumber: 8, sharpNote: 'E', flatNote: 'E', octave: 2 },
-                    { noteNumber: 9, sharpNote: 'F', flatNote: 'F', octave: 2 },
-                    { noteNumber: 10, sharpNote: 'F#', flatNote: 'G♭', octave: 2 }
+                    { number: 8, sharp: 'E', flat: 'E', octave: 2, scalePosition: null },
+                    { number: 9, sharp: 'F', flat: 'F', octave: 2, scalePosition: null },
+                    { number: 10, sharp: 'F#', flat: 'G♭', octave: 2, scalePosition: null }
                 ]
             ]
 
-            assert.deepStrictEqual(fretboard.getFretboard, expectedStringMatrix)
+            assert.deepStrictEqual(fretboard.fretboard, expectedStringMatrix)
         })
 
         it('should throw if no strings are provided', () => {
@@ -64,27 +64,29 @@ describe('Fretboard', () => {
         })
     })
 
-    describe('getModeOnFretboard', () => {
+    describe('setMode', () => {
         it('should return the correct notes for the A aeolian mode', () => {
             const fretboard = new Fretboard(
                 [{ note: 'A' }, { note: 'E' }],
                 2
             )
 
+            const aeolianIntervals = [0, 2, 3, 5, 7, 8, 10]
+
             const expectedAMinorStringMatrix = [
                 [
-                    { noteNumber: 1, sharpNote: 'A', flatNote: 'A', octave: null, positionInScale: 1 },
-                    { noteNumber: 2, sharpNote: 'A#', flatNote: 'B♭', octave: null, positionInScale: -1 },
-                    { noteNumber: 3, sharpNote: 'B', flatNote: 'B', octave: null, positionInScale: 2 },
+                    { number: 1, sharp: 'A', flat: 'A', octave: null, scalePosition: 1 },
+                    { number: 2, sharp: 'A#', flat: 'B♭', octave: null, scalePosition: null },
+                    { number: 3, sharp: 'B', flat: 'B', octave: null, scalePosition: 2 },
                 ],
                 [
-                    { noteNumber: 8, sharpNote: 'E', flatNote: 'E', octave: null, positionInScale: 5 },
-                    { noteNumber: 9, sharpNote: 'F', flatNote: 'F', octave: null, positionInScale: 6 },
-                    { noteNumber: 10, sharpNote: 'F#', flatNote: 'G♭', octave: null, positionInScale: -1 },
+                    { number: 8, sharp: 'E', flat: 'E', octave: null, scalePosition: 5 },
+                    { number: 9, sharp: 'F', flat: 'F', octave: null, scalePosition: 6 },
+                    { number: 10, sharp: 'F#', flat: 'G♭', octave: null, scalePosition: null },
                 ]
             ]
 
-            assert.deepStrictEqual(fretboard.getModeOnFretboard('A', 'aeolian'), expectedAMinorStringMatrix)
+            assert.deepStrictEqual(fretboard.setMode('A', aeolianIntervals), expectedAMinorStringMatrix)
         })
 
         it('should throw if invalid root note is provided', () => {
@@ -93,7 +95,9 @@ describe('Fretboard', () => {
                 2
             )
 
-            assert.throws(() => fretboard.getModeOnFretboard('InvalidNote', 'aeolian'), {
+            const aeolianIntervals = [0, 2, 3, 5, 7, 8, 10]
+
+            assert.throws(() => fretboard.setMode('InvalidNote', aeolianIntervals), {
                 message: 'Invalid root note. Supported notes: A, A#, B♭, B, C, C#, D♭, D, D#, E♭, E, F, F#, G♭, G, G#, A♭'
             })
         })
@@ -104,8 +108,8 @@ describe('Fretboard', () => {
                 2
             )
 
-            assert.throws(() => fretboard.getModeOnFretboard('A', 'InvalidMode'), {
-                message: 'Invalid mode. Supported modes: ionian, dorian, phrygian, lydian, mixolydian, aeolian, locrian'
+            assert.throws(() => fretboard.setMode('A', []), {
+                message: 'Invalid mode intervals'
             })
         })
     })

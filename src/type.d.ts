@@ -1,20 +1,17 @@
 declare type Note = {
-    noteNumber: number,
-    sharpNote: string,
-    flatNote: string,
-    octave: number | null
+    number: number,
+    sharp: string,
+    flat: string,
+    octave: number | null,
+    scalePosition: number | null
 }
 
-declare  type OpenNote = {
+declare type OpenNote = {
     note: string,
     octave?: number
 }
 
-declare type NoteInScale = Note & {
-    positionInScale: number
-}
-
 declare interface FretboardInterface {
-    getFretboard: Note[][],
-    getModeOnFretboard(rootNote: string, mode: string): NoteInScale[][]
+    fretboard: Note[][],
+    setMode(rootNote: string, modeIntervals: number[]): Note[][]
 }

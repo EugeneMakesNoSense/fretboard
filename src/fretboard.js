@@ -1,5 +1,5 @@
 import { noteOnFretFactory } from './note.js'
-import { noteToNumberMap, modesIntervalsMap, supportedNotes, supportedModes, chromaticScaleNotesNumber } from './constants.js'
+import { noteToNumberMap, supportedNotes, chromaticScaleNotesNumber } from './constants.js'
 
 /**
  * Represents a guitar fretboard.
@@ -80,46 +80,46 @@ export class Fretboard {
      * @param {number} currentNoteNumber - The note number to find the position for
      * @param {number} rootNoteNumber - The root note number of the scale
      * @param {number[]} modeIntervals - The intervals of the mode
-     * @returns {number} - The position of the note in the scale
+     * @returns {number | null} - The position of the note in the scale
      */
     #getPositionInScale(currentNoteNumber, rootNoteNumber, modeIntervals) {
         if (currentNoteNumber === rootNoteNumber) {
             return 1
         }
 
-        const positionInScale = modeIntervals.findIndex(interval => (rootNoteNumber + interval) % chromaticScaleNotesNumber === currentNoteNumber)
+        const scalePosition = modeIntervals.findIndex(interval => (rootNoteNumber + interval) % chromaticScaleNotesNumber === currentNoteNumber)
 
-        return positionInScale !== -1 ? positionInScale + 1 : -1
+        return scalePosition !== -1 ? scalePosition + 1 : null
     }
 
     /**
      * Get the notes for a specific mode on the fretboard
      * @param {string} rootNote - The root note of the mode
-     * @param {string} mode - The mode to get the notes for
-     * @returns {NoteInScale[][]} - The notes for the mode on the fretboard
+     * @param {number[]} modeIntervals - The mode to get the notes for
+     * @returns {Note[][]} - The notes for the mode on the fretboard
      */
-    getModeOnFretboard(rootNote, mode) {
+    setMode(rootNote, modeIntervals) {
         const rootNoteNumber = noteToNumberMap[rootNote]
 
         if (!rootNoteNumber) {
             throw new Error(`Invalid root note. Supported notes: ${supportedNotes.join(', ')}`)
         }
 
-        const modeIntervals = modesIntervalsMap[mode]
-
-        if (!modeIntervals) {
-            throw new Error(`Invalid mode. Supported modes: ${supportedModes.join(', ')}`)
+        if (!Array.isArray(modeIntervals) || modeIntervals.length === 0) {
+            throw new Error('Invalid mode intervals')
         }
 
-        return this.#stringsMatrix.map(string => {
+        this.#stringsMatrix = this.#stringsMatrix.map(string => {
             return string.map((note) => ({
                 ...note,
-                positionInScale: this.#getPositionInScale(note.noteNumber, rootNoteNumber, modeIntervals)
+                scalePosition: this.#getPositionInScale(note.number, rootNoteNumber, modeIntervals)
             }))
         })
+
+        return this.#stringsMatrix
     }
 
-    get getFretboard() {
+    get fretboard() {
         return this.#stringsMatrix
     }
 }

@@ -67,7 +67,7 @@ export class Fretboard {
 
             const stringNotes = [noteOnFretFactory(stringNumber, string.octave)]
 
-            for (let fret = 1; fret < frets; fret++) {
+            for (let fret = 1; fret <= frets; fret++) {
                 stringNotes.push(noteOnFretFactory(this.#getNoteNumber(stringNumber, fret), string.octave))
             }
 

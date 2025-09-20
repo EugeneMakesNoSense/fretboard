@@ -11,5 +11,5 @@ export const noteOnFretFactory = (number, octave = null) => ({
     sharp: numberToSharpNoteMap[number],
     flat: numberToFlatNoteMap[number],
     octave,
-    scalePosition: null
+    scalePosition: null,
 })

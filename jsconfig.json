@@ -1,13 +1,11 @@
 {
-  "compilerOptions": {
-    "checkJs": true,
-    "target": "es2023",
-    "module": "esnext",
-    "strict": true,
-    "allowJs": true,
-    "noEmit": true
-  },
-  "exclude": [
-    "node_modules"
-  ]
+    "compilerOptions": {
+        "checkJs": true,
+        "target": "es2023",
+        "module": "esnext",
+        "strict": true,
+        "allowJs": true,
+        "noEmit": true
+    },
+    "exclude": ["node_modules"]
 }

@@ -1,1 +1,1 @@
-export { Fretboard } from "./fretboard.js"
+export { Fretboard } from './fretboard.js'

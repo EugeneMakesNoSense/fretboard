@@ -3,6 +3,7 @@ import {
     noteToNumberMap,
     supportedNotes,
     chromaticScaleNotesNumber,
+    newOctaveNoteNumber,
 } from './constants.js'
 
 /**
@@ -72,17 +73,28 @@ export class Fretboard {
      */
     #createStringsMatrix(strings, frets) {
         return strings.map((string) => {
-            const stringNumber = noteToNumberMap[string.note]
+            let octave = string.octave
 
-            const stringNotes = [noteOnFretFactory(stringNumber, string.octave)]
+            const openNoteNumber = noteToNumberMap[string.note]
+
+            const stringNotes = []
+
+            const firstNote = noteOnFretFactory(openNoteNumber, octave)
+
+            stringNotes.push(firstNote)
 
             for (let fret = 1; fret <= frets; fret++) {
-                stringNotes.push(
-                    noteOnFretFactory(
-                        this.#getNoteNumber(stringNumber, fret),
-                        string.octave,
-                    ),
-                )
+                const noteNumber = this.#getNoteNumber(openNoteNumber, fret)
+
+                if (
+                    Number.isInteger(octave) &&
+                    octave !== undefined &&
+                    noteNumber === newOctaveNoteNumber
+                ) {
+                    octave++
+                }
+
+                stringNotes.push(noteOnFretFactory(noteNumber, octave))
             }
 
             return stringNotes
@@ -101,11 +113,20 @@ export class Fretboard {
             return 1
         }
 
-        const scalePosition = modeIntervals.findIndex(
-            (interval) =>
-                (rootNoteNumber + interval) % chromaticScaleNotesNumber ===
-                currentNoteNumber,
-        )
+        const scalePosition = modeIntervals.findIndex((interval) => {
+            if (rootNoteNumber + interval === currentNoteNumber) {
+                return true
+            }
+
+            if (
+                rootNoteNumber + interval ===
+                currentNoteNumber + chromaticScaleNotesNumber
+            ) {
+                return true
+            }
+
+            return false
+        })
 
         return scalePosition !== -1 ? scalePosition + 1 : null
     }

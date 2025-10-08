@@ -32,7 +32,7 @@ fretboard.fretboard[0][1] // first fret on the highest string
 fretboard.setMode('E', [0, 2, 4, 5, 7, 9, 11]) // E major
 ```
 
-The method returns two-dimensional array array of note objects
+The method returns two-dimensional array of note objects
 
 ```js
 fretboard.fretboard[0][0].scalePosition // position in the scale (1-n) or null if the note is not in the scale

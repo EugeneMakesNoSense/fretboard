@@ -18,17 +18,20 @@ export class Fretboard {
      * @param {number} frets - number of frets on the fretboard
      */
     constructor(strings, frets) {
-        if (!strings || strings?.length === 0) {
-            throw new Error('No strings provided')
-        }
+        this.#validateStrings(strings)
+        this.#validateFrets(frets)
 
+        this.#stringsMatrix = this.#createStringsMatrix(strings, frets)
+    }
+
+    /**
+     * Validate the provided frets
+     * @param {number} frets - The string notes to validate
+     */
+    #validateFrets(frets) {
         if (frets <= 0) {
             throw new Error('Invalid number of frets')
         }
-
-        this.#validateStrings(strings)
-
-        this.#stringsMatrix = this.#createStringsMatrix(strings, frets)
     }
 
     /**
@@ -36,6 +39,10 @@ export class Fretboard {
      * @param {OpenNote[]} strings - The string notes to validate
      */
     #validateStrings(strings) {
+        if (!strings || strings?.length === 0) {
+            throw new Error('No strings provided')
+        }
+    
         for (const string of strings) {
             if (!supportedNotes.includes(string.note)) {
                 throw new Error(
